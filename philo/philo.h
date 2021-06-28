@@ -7,6 +7,12 @@
 # include <pthread.h>
 # include <sys/time.h>
 
+# define FORK	"has taken a fork"
+# define EAT	"is eating"
+# define SLEEP	"is sleeping"
+# define THINK	"is thinking"
+# define DIE	"died"
+
 typedef struct s_philo
 {
 	int				id;
@@ -14,6 +20,7 @@ typedef struct s_philo
 	int 			count_eat;
 	int				time_sleep;
 	unsigned int	time_life;
+	unsigned int	time_start;
 	pthread_t		flow;
 	pthread_mutex_t	*lfork;
 	pthread_mutex_t	*rfork;
@@ -32,6 +39,5 @@ typedef struct s_data
 
 void			init_data(int argc, char **argv, t_data *data);
 void			create_thread(t_data *data);
-unsigned int	get_time(void);
 
 #endif
