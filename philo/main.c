@@ -23,6 +23,23 @@ unsigned int	get_time(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
+int	create_forks(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * \
+	data->num_philo);
+	if (data->forks == NULL)
+		return (1);
+	while (i < data->num_philo)
+	{
+		pthread_mutex_init(&data->forks[i], NULL);
+		i++;
+	}
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;

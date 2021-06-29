@@ -39,30 +39,10 @@ static int	ft_atoi(const char *str)
 	return ((int)num * sign);
 }
 
-static int	create_forks(t_data *data)
+static void	take_forks(t_data *data)
 {
 	int	i;
 
-	i = 0;
-	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * \
-	data->num_philo);
-	if (data->forks == NULL)
-		return (1);
-	while (i < data->num_philo)
-	{
-		pthread_mutex_init(&data->forks[i], NULL);
-		i++;
-	}
-	return (0);
-}
-
-static int	create_philo(t_data *data)
-{
-	int	i;
-
-	data->philo = (t_philo *)malloc(sizeof(t_philo) * data->num_philo);
-	if (data->philo == NULL)
-		return (1);
 	i = 0;
 	while (i < data->num_philo)
 	{
@@ -83,6 +63,14 @@ static int	create_philo(t_data *data)
 		}
 		i++;
 	}
+}
+
+static int	create_philo(t_data *data)
+{
+	data->philo = (t_philo *)malloc(sizeof(t_philo) * data->num_philo);
+	if (data->philo == NULL)
+		return (1);
+	take_forks(data);
 	return (0);
 }
 

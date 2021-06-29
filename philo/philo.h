@@ -43,5 +43,6 @@ typedef struct s_data
 int				init_data(int argc, char **argv, t_data *data);
 int				create_thread(t_data *data);
 unsigned int	get_time(void);
+int				create_forks(t_data *data);
 
 #endif
