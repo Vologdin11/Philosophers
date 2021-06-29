@@ -17,7 +17,7 @@ typedef struct s_philo
 {
 	int				id;
 	int				time_eat;
-	int 			count_eat;
+	int				count_eat;
 	int				time_sleep;
 	unsigned int	time_life;
 	unsigned int	time_start;
@@ -33,14 +33,15 @@ typedef struct s_data
 	int				time_die;
 	int				lasting_eat;
 	int				lasting_sleep;
-	int 			count_eating_philo;
+	int				count_eating_philo;
 	int				num_each_philo_eat;
 	t_philo			*philo;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	message;
 }				t_data;
 
-void			init_data(int argc, char **argv, t_data *data);
-void			create_thread(t_data *data);
+int				init_data(int argc, char **argv, t_data *data);
+int				create_thread(t_data *data);
+unsigned int	get_time(void);
 
 #endif

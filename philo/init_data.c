@@ -39,29 +39,31 @@ static int	ft_atoi(const char *str)
 	return ((int)num * sign);
 }
 
-static void	create_forks(t_data *data)
+static int	create_forks(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	//create mutex
-	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * data->num_philo);
-	//Init mutex
+	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * \
+	data->num_philo);
+	if (data->forks == NULL)
+		return (1);
 	while (i < data->num_philo)
 	{
 		pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
+	return (0);
 }
 
-static void	create_philo(t_data *data)
+static int	create_philo(t_data *data)
 {
 	int	i;
 
-	//Create philo
 	data->philo = (t_philo *)malloc(sizeof(t_philo) * data->num_philo);
+	if (data->philo == NULL)
+		return (1);
 	i = 0;
-	//init philo
 	while (i < data->num_philo)
 	{
 		data->philo[i].id = i + 1;
@@ -81,9 +83,10 @@ static void	create_philo(t_data *data)
 		}
 		i++;
 	}
+	return (0);
 }
 
-void	init_data(int argc, char **argv, t_data *data)
+int	init_data(int argc, char **argv, t_data *data)
 {
 	data->num_philo = ft_atoi(argv[1]);
 	data->time_die = ft_atoi(argv[2]);
@@ -93,6 +96,7 @@ void	init_data(int argc, char **argv, t_data *data)
 	data->num_each_philo_eat = 0;
 	if (argc == 6)
 		data->num_each_philo_eat = ft_atoi(argv[5]);
-	create_forks(data);
-	create_philo(data);
+	if (create_forks(data) || create_philo(data))
+		return (1);
+	return (0);
 }

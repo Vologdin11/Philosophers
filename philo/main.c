@@ -1,13 +1,36 @@
 #include "philo.h"
 
-int main(int argc, char **argv)
-{	
-	//Аргументы
+static void	ft_clear(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	pthread_mutex_destroy(&data->message);
+	while (i < data->num_philo)
+	{
+		pthread_mutex_destroy(&data->forks[i]);
+		i++;
+	}
+	free(data->philo);
+	free(data->forks);
+}
+
+unsigned int	get_time(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
+
+int	main(int argc, char **argv)
+{
 	t_data	data;
-	//Check count arguments
+
 	if (argc != 5 && argc != 6)
 		return (0);
-	//Инициализация аргументов
-	init_data(argc, argv, &data);
-	create_thread(&data);
+	if (init_data(argc, argv, &data) == 0)
+		create_thread(&data);
+	ft_clear(&data);
+	return (0);
 }
