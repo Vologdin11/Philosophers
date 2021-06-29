@@ -68,6 +68,7 @@ static void	create_philo(t_data *data)
 		data->philo[i].count_eat = 0;
 		data->philo[i].time_eat = data->lasting_eat;
 		data->philo[i].time_sleep = data->lasting_sleep;
+		data->philo[i].message = &data->message;
 		if (i < data->num_philo - 1)
 		{
 			data->philo[i].lfork = &data->forks[i];
@@ -88,6 +89,7 @@ void	init_data(int argc, char **argv, t_data *data)
 	data->time_die = ft_atoi(argv[2]);
 	data->lasting_eat = ft_atoi(argv[3]);
 	data->lasting_sleep = ft_atoi(argv[4]);
+	pthread_mutex_init(&data->message, NULL);
 	data->num_each_philo_eat = 0;
 	if (argc == 6)
 		data->num_each_philo_eat = ft_atoi(argv[5]);

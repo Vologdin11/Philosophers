@@ -24,6 +24,7 @@ typedef struct s_philo
 	pthread_t		flow;
 	pthread_mutex_t	*lfork;
 	pthread_mutex_t	*rfork;
+	pthread_mutex_t	*message;
 }				t_philo;
 
 typedef struct s_data
@@ -32,9 +33,11 @@ typedef struct s_data
 	int				time_die;
 	int				lasting_eat;
 	int				lasting_sleep;
+	int 			count_eating_philo;
 	int				num_each_philo_eat;
 	t_philo			*philo;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	message;
 }				t_data;
 
 void			init_data(int argc, char **argv, t_data *data);
