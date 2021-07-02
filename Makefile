@@ -1,6 +1,6 @@
 NAME = philo
 
-SRCS = main.c init_data.c create_thread.c
+SRCS = src/main.c src/init_data.c src/create_thread.c
 
 CC = gcc
 

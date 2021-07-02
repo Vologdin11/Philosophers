@@ -1,10 +1,20 @@
-#include "philo.h"
+#include "../philo.h"
 
-static void	print_message(t_philo *philo, char *message)
+int	create_forks(t_data *data)
 {
-	pthread_mutex_lock(((t_philo *)philo)->message);
-	printf("%u %d %s\n", get_time() - philo->time_start, philo->id, message);
-	pthread_mutex_unlock(((t_philo *)philo)->message);
+	int	i;
+
+	i = 0;
+	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * \
+	data->num_philo);
+	if (data->forks == NULL)
+		return (1);
+	while (i < data->num_philo)
+	{
+		pthread_mutex_init(&data->forks[i], NULL);
+		i++;
+	}
+	return (0);
 }
 
 static void	check_die(t_data *data)

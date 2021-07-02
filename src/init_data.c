@@ -1,4 +1,4 @@
-#include "philo.h"
+#include "../philo.h"
 
 static int	ft_checklimits(long long num, char	ch, long long sign)
 {
@@ -20,9 +20,6 @@ static int	ft_atoi(const char *str)
 	i = 0;
 	sign = 1;
 	num = 0;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' || str[i] == '\r'\
-	|| str[i] == '\v' || str[i] == '\f')
-		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
@@ -36,6 +33,8 @@ static int	ft_atoi(const char *str)
 		else
 			return (ft_checklimits(num, str[i], sign));
 	}
+	if ((str[i] < 47 || str[i] > 58) && str[i] != '\0')
+		return (-1);
 	return ((int)num * sign);
 }
 
@@ -81,10 +80,23 @@ int	init_data(int argc, char **argv, t_data *data)
 	data->lasting_eat = ft_atoi(argv[3]);
 	data->lasting_sleep = ft_atoi(argv[4]);
 	pthread_mutex_init(&data->message, NULL);
+	data->forks = NULL;
+	data->philo = NULL;
 	data->num_each_philo_eat = 0;
 	if (argc == 6)
+	{
 		data->num_each_philo_eat = ft_atoi(argv[5]);
-	if (create_forks(data) || create_philo(data))
+		if (data->num_each_philo_eat < 1)
+		{
+			printf("Error\n");
+			return (1);
+		}
+	}
+	if (data->num_philo < 1 || data->time_die < 60 || data->lasting_eat < 60 \
+	|| data->lasting_sleep < 60 || create_forks(data) || create_philo(data))
+	{
+		printf("Error\n");
 		return (1);
+	}
 	return (0);
 }
